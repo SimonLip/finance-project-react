@@ -1,0 +1,11 @@
+.wrapper {
+    margin-bottom: 10px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+select {
+    padding: 5px;
+}

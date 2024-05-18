@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+.calculatorEarningItemWrapper p {
+    margin: 0;
+}

@@ -1,0 +1,37 @@
+/* Navbar.module.css */
+.nav {
+    grid-area: n;
+    background-color: burlywood;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .item {
+    margin-bottom: 10px;
+  }
+  
+  .item a {
+    color: white;
+    text-decoration: none;
+    padding: 1px 15px;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .item a.inactive {
+    background-color: transparent;
+    padding-right: 10px;
+  }
+  
+  .item a.active {
+    background-color: gold;
+    color: black;
+  }
+  
+  .item a:hover {
+    background-color: rgba(255, 215, 0, 0.8);
+    color: black;
+  }
+  
