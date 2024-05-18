@@ -11,7 +11,7 @@ const Earnings = () => {
   useEffect(() => {
     const fetchEarnings = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/earnings');
+        const response = await axios.get('https://finance-project-back-end.onrender.com/api/earnings');
         setEarnings(response.data);
       } catch (error) {
         console.error('Помилка отримання даних про доходи:', error);
@@ -27,7 +27,7 @@ const Earnings = () => {
     const newEarning = { source, amount, currency };
 
     try {
-      await axios.post('http://localhost:4000/api/earnings/add', newEarning);
+      await axios.post('https://finance-project-back-end.onrender.com/api/earnings/add', newEarning);
       setEarnings([...earnings, newEarning]);
       setSource('');
       setAmount('');

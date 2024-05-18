@@ -17,7 +17,7 @@ const Analytics = () => {
     useEffect(() => {
         const fetchEarnings = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/earnings');
+                const response = await axios.get('https://finance-project-back-end.onrender.com/api/earnings');
                 setEarnings(response.data);
                 setShowEarningDeleteButton(response.data.length > 0);
             } catch (error) {
@@ -27,7 +27,7 @@ const Analytics = () => {
 
         const fetchExpenses = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/expenses');
+                const response = await axios.get('https://finance-project-back-end.onrender.com/api/expenses');
                 setExpenses(response.data);
                 setShowExpenseDeleteButton(response.data.length > 0);
             } catch (error) {
@@ -61,7 +61,7 @@ const Analytics = () => {
 
     const handleDeleteEarningsButtonClick = async () => {
         try {
-            await axios.post('http://localhost:4000/api/earnings/delete', { ids: selectedEarningIds });
+            await axios.post('https://finance-project-back-end.onrender.com/api/earnings/delete', { ids: selectedEarningIds });
             setEarnings((prevEarnings) => prevEarnings.filter((earning) => !selectedEarningIds.includes(earning._id)));
             setSelectedEarningIds([]);
             setShowEarningDeleteButton(false);
@@ -72,7 +72,7 @@ const Analytics = () => {
 
     const handleDeleteExpensesButtonClick = async () => {
         try {
-            await axios.post('http://localhost:4000/api/expenses/delete', { ids: selectedExpenseIds });
+            await axios.post('https://finance-project-back-end.onrender.com/api/expenses/delete', { ids: selectedExpenseIds });
             setExpenses((prevExpenses) => prevExpenses.filter((expense) => !selectedExpenseIds.includes(expense._id)));
             setSelectedExpenseIds([]);
             setShowExpenseDeleteButton(false);
