@@ -51,6 +51,7 @@ app.get('/api/earnings', async (req, res) => {
 
 app.post('/api/earnings/add', async (req, res) => {
   try {
+    console.log('Отримано запит на додавання доходу:', req.body);
     const newEarning = new Earning(req.body);
     await newEarning.save();
     res.status(201).send('Дохід успішно додано');
@@ -73,6 +74,7 @@ app.get('/api/expenses', async (req, res) => {
 
 app.post('/api/expenses/add', async (req, res) => {
   try {
+    console.log('Отримано запит на додавання витрат:', req.body);
     const newExpense = new Expense(req.body);
     await newExpense.save();
     res.status(201).send('Витрати успішно додано');
