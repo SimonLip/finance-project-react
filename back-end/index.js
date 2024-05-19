@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,11 +5,12 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
 // Підключення до бази даних MongoDB
-mongoose.connect('mongodb://localhost:27017/financial_app', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/financial_app', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -21,7 +21,7 @@ db.once('open', () => {
   console.log('Підключено до бази даних MongoDB');
 });
 
-// Створення схеми для доходів
+// Схеми та моделі
 const earningSchema = new mongoose.Schema({
   source: String,
   amount: Number,
@@ -30,7 +30,6 @@ const earningSchema = new mongoose.Schema({
 
 const Earning = mongoose.model('Earning', earningSchema);
 
-// Створення схеми для витрат
 const expenseSchema = new mongoose.Schema({
   source: String,
   amount: Number,
@@ -83,8 +82,6 @@ app.post('/api/expenses/add', async (req, res) => {
   }
 });
 
-// server.js
-
 // Маршрут для видалення обраних доходів
 app.post('/api/earnings/delete', async (req, res) => {
   try {
@@ -108,7 +105,6 @@ app.post('/api/expenses/delete', async (req, res) => {
     res.status(500).send('Помилка сервера');
   }
 });
-
 
 // Запуск сервера
 app.listen(PORT, () => {
