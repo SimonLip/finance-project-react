@@ -13,29 +13,30 @@ const Analytics = () => {
     const [selectedExpenseIds, setSelectedExpenseIds] = useState([]);
     const [showEarningDeleteButton, setShowEarningDeleteButton] = useState(false);
     const [showExpenseDeleteButton, setShowExpenseDeleteButton] = useState(false);
-    const [earningFilterOptions, setEarningFilterOptions] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchEarnings = async () => {
             try {
-                const [earningsResponse, expensesResponse] = await Promise.all([
-                    axios.get('https://finance-project-back-end.onrender.com/api/earnings'),
-                    axios.get('https://finance-project-back-end.onrender.com/api/expenses')
-                ]);
-                setEarnings(earningsResponse.data);
-                setExpenses(expensesResponse.data);
-                setShowEarningDeleteButton(earningsResponse.data.length > 0);
-                setShowExpenseDeleteButton(expensesResponse.data.length > 0);
-
-                // Отримання унікальних значень джерел доходу для фільтрації
-                const uniqueSources = Array.from(new Set(earningsResponse.data.map((earning) => earning.source)));
-                setEarningFilterOptions(uniqueSources);
+                const response = await axios.get('https://finance-project-back-end.onrender.com/api/earnings');
+                setEarnings(response.data);
+                setShowEarningDeleteButton(response.data.length > 0);
             } catch (error) {
-                console.error('Помилка отримання даних:', error);
+                console.error('Помилка отримання даних про доходи:', error);
             }
         };
 
-        fetchData();
+        const fetchExpenses = async () => {
+            try {
+                const response = await axios.get('https://finance-project-back-end.onrender.com/api/expenses');
+                setExpenses(response.data);
+                setShowExpenseDeleteButton(response.data.length > 0);
+            } catch (error) {
+                console.error('Помилка отримання даних про витрати:', error);
+            }
+        };
+
+        fetchEarnings();
+        fetchExpenses();
     }, []);
 
     const handleEarningCheckboxChange = (id) => {
@@ -80,23 +81,11 @@ const Analytics = () => {
         }
     };
 
-    const handleEarningFilterChange = (selectedSource) => {
-        if (selectedSource === "") {
-            // Якщо обрано всі джерела, показати всі доходи
-            setFilteredEarnings(earnings);
-        } else {
-            // Інакше, відфільтрувати доходи за обраним джерелом
-            const filteredEarnings = earnings.filter((earning) => earning.source === selectedSource);
-            setFilteredEarnings(filteredEarnings);
-        }
-    };
-
     return (
         <div className={s.wrapper}>
             <div>
                 <AnalyticsEarningFilterItem
-                    options={earningFilterOptions}
-                    onSourceChange={handleEarningFilterChange}
+                    options={Array.from(new Set(earnings.map((earning) => earning.source)))}
                 />
                 {earnings.map((earning) => (
                     <AnalyticsEarningItem
