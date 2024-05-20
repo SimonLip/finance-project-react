@@ -1,3 +1,4 @@
+// Analytics.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AnalyticsEarningFilterItem from './AnalyticsEarningFilterItem/AnalyticsEarningFilterItem';
@@ -86,6 +87,9 @@ const Analytics = () => {
             <div>
                 <AnalyticsEarningFilterItem
                     options={Array.from(new Set(earnings.map((earning) => earning.source)))}
+                    onSourceChange={(source) => {
+                        // Оновіть стан фільтрації для доходів тут
+                    }}
                 />
                 {earnings.map((earning) => (
                     <AnalyticsEarningItem
@@ -102,6 +106,9 @@ const Analytics = () => {
             <div>
                 <AnalyticsExpenseFilterItem
                     options={Array.from(new Set(expenses.map((expense) => expense.source)))}
+                    onSourceChange={(source) => {
+                        // Оновіть стан фільтрації для витрат тут
+                    }}
                 />
                 {expenses.map((expense) => (
                     <AnalyticsExpenseItem
