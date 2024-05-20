@@ -1,12 +1,17 @@
-// AnalyticsExpenseFilterItem.jsx
+// AnalyticsEarningFilterItem.jsx
 import React from 'react';
-import s from './AnalyticsExpenseFilterItem.module.css';
+import s from './AnalyticsEarningFilterItem.module.css';
 
-const AnalyticsExpenseFilterItem = ({ options, onSourceChange }) => {
+const AnalyticsEarningFilterItem = ({ options, onSourceChange }) => {
+    const handleSourceChange = (e) => {
+        const selectedSource = e.target.value;
+        onSourceChange(selectedSource);
+    };
+
     return (
         <div className={s.wrapper}>
-            <h2>Витрати:</h2>
-            <select onChange={(e) => onSourceChange(e.target.value)}>
+            <h2>Доходи:</h2>
+            <select onChange={handleSourceChange}>
                 <option value="">Всі</option>
                 {options.map(option => (
                     <option key={option} value={option}>{option}</option>
@@ -16,4 +21,4 @@ const AnalyticsExpenseFilterItem = ({ options, onSourceChange }) => {
     );
 };
 
-export default AnalyticsExpenseFilterItem;
+export default AnalyticsEarningFilterItem;
