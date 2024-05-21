@@ -1,4 +1,3 @@
-// Analytics.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AnalyticsEarningFilterItem from './AnalyticsEarningFilterItem/AnalyticsEarningFilterItem';
@@ -10,6 +9,8 @@ import s from './Analytics.module.css';
 const Analytics = () => {
     const [earnings, setEarnings] = useState([]);
     const [expenses, setExpenses] = useState([]);
+    const [filteredEarnings, setFilteredEarnings] = useState([]);
+    const [filteredExpenses, setFilteredExpenses] = useState([]);
     const [selectedEarningIds, setSelectedEarningIds] = useState([]);
     const [selectedExpenseIds, setSelectedExpenseIds] = useState([]);
     const [showEarningDeleteButton, setShowEarningDeleteButton] = useState(false);
@@ -20,6 +21,7 @@ const Analytics = () => {
             try {
                 const response = await axios.get('https://finance-project-back-end.onrender.com/api/earnings');
                 setEarnings(response.data);
+                setFilteredEarnings(response.data);
                 setShowEarningDeleteButton(response.data.length > 0);
             } catch (error) {
                 console.error('Помилка отримання даних про доходи:', error);
@@ -30,6 +32,7 @@ const Analytics = () => {
             try {
                 const response = await axios.get('https://finance-project-back-end.onrender.com/api/expenses');
                 setExpenses(response.data);
+                setFilteredExpenses(response.data);
                 setShowExpenseDeleteButton(response.data.length > 0);
             } catch (error) {
                 console.error('Помилка отримання даних про витрати:', error);
@@ -64,6 +67,7 @@ const Analytics = () => {
         try {
             await axios.post('https://finance-project-back-end.onrender.com/api/earnings/delete', { ids: selectedEarningIds });
             setEarnings((prevEarnings) => prevEarnings.filter((earning) => !selectedEarningIds.includes(earning._id)));
+            setFilteredEarnings((prevEarnings) => prevEarnings.filter((earning) => !selectedEarningIds.includes(earning._id)));
             setSelectedEarningIds([]);
             setShowEarningDeleteButton(false);
         } catch (error) {
@@ -75,10 +79,27 @@ const Analytics = () => {
         try {
             await axios.post('https://finance-project-back-end.onrender.com/api/expenses/delete', { ids: selectedExpenseIds });
             setExpenses((prevExpenses) => prevExpenses.filter((expense) => !selectedExpenseIds.includes(expense._id)));
+            setFilteredExpenses((prevExpenses) => prevExpenses.filter((expense) => !selectedExpenseIds.includes(expense._id)));
             setSelectedExpenseIds([]);
             setShowExpenseDeleteButton(false);
         } catch (error) {
             console.error('Помилка видалення витрат:', error);
+        }
+    };
+
+    const handleEarningFilterChange = (selectedSource) => {
+        if (selectedSource === '') {
+            setFilteredEarnings(earnings);
+        } else {
+            setFilteredEarnings(earnings.filter(earning => earning.source === selectedSource));
+        }
+    };
+
+    const handleExpenseFilterChange = (selectedSource) => {
+        if (selectedSource === '') {
+            setFilteredExpenses(expenses);
+        } else {
+            setFilteredExpenses(expenses.filter(expense => expense.source === selectedSource));
         }
     };
 
@@ -87,11 +108,9 @@ const Analytics = () => {
             <div>
                 <AnalyticsEarningFilterItem
                     options={Array.from(new Set(earnings.map((earning) => earning.source)))}
-                    onSourceChange={(source) => {
-                        // Оновіть стан фільтрації для доходів тут
-                    }}
+                    onSourceChange={handleEarningFilterChange}
                 />
-                {earnings.map((earning) => (
+                {filteredEarnings.map((earning) => (
                     <AnalyticsEarningItem
                         key={earning._id}
                         earning={earning}
@@ -106,11 +125,9 @@ const Analytics = () => {
             <div>
                 <AnalyticsExpenseFilterItem
                     options={Array.from(new Set(expenses.map((expense) => expense.source)))}
-                    onSourceChange={(source) => {
-                        // Оновіть стан фільтрації для витрат тут
-                    }}
+                    onSourceChange={handleExpenseFilterChange}
                 />
-                {expenses.map((expense) => (
+                {filteredExpenses.map((expense) => (
                     <AnalyticsExpenseItem
                         key={expense._id}
                         expense={expense}
