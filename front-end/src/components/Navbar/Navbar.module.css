@@ -5,8 +5,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh; /* Висота навбару 100% від висоти видимої області вікна */
-  box-sizing: border-box; /* Включення падінгів у загальну висоту */
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  /* Ensure the navbar takes up the full viewport height */
 }
 
 .item {
