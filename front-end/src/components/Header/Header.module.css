@@ -1,6 +1,7 @@
 .header {
   grid-area: h;
   background-color: burlywood;
+  max-height: 64px;
 }
 
 .header img {
