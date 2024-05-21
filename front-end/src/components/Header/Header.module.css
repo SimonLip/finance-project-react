@@ -3,8 +3,7 @@
   background-color: burlywood;
   max-height: 64px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: start;
 }
 
 .header img {
