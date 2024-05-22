@@ -35,8 +35,9 @@ const CurrencyExchange = () => {
         setSelectedToCurrency(e.target.value);
     };
 
-    const handleAmountChange = (e) => {
-        setAmount(parseFloat(e.target.value));
+    const handleAmountChange = ({target: {value}}) => {
+        if (isNaN(value)) setAmount(0);
+        setAmount(parseFloat(value));
     };
 
     return (
