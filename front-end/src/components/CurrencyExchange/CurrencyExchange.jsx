@@ -36,7 +36,7 @@ const CurrencyExchange = () => {
     };
 
     const handleAmountChange = ({target: {value}}) => {
-        if (value || isNaN(value)) setAmount(0);
+        if (!value || isNaN(value)) setAmount(0);
         setAmount(parseFloat(value));
     };
 
