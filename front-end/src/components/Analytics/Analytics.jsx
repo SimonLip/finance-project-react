@@ -110,9 +110,9 @@ const Analytics = () => {
                     options={Array.from(new Set(earnings.map((earning) => earning.source)))}
                     onSourceChange={handleEarningFilterChange}
                 />
-                {filteredEarnings.map((earning) => (
+                {filteredEarnings.map((earning, key) => (
                     <AnalyticsEarningItem
-                        key={earning._id}
+                        key={key}
                         earning={earning}
                         isSelected={selectedEarningIds.includes(earning._id)}
                         onCheckboxChange={handleEarningCheckboxChange}
@@ -127,9 +127,9 @@ const Analytics = () => {
                     options={Array.from(new Set(expenses.map((expense) => expense.source)))}
                     onSourceChange={handleExpenseFilterChange}
                 />
-                {filteredExpenses.map((expense) => (
+                {filteredExpenses.map((expense, key) => (
                     <AnalyticsExpenseItem
-                        key={expense._id}
+                        key={key}
                         expense={expense}
                         isSelected={selectedExpenseIds.includes(expense._id)}
                         onCheckboxChange={handleExpenseCheckboxChange}
