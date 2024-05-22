@@ -3,7 +3,7 @@ import React from 'react';
 import s from './CurrencyExchangeRate.module.css'
 
 const CurrencyExchangeRate = ({ amount, fromCurrency, toCurrency, usdRate, eurRate }) => {
-    
+    if (!amount || isNaN(amount)) amount = 0;
     if (usdRate === null || eurRate === null) {
         return amount;
     }
